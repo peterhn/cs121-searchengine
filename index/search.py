@@ -4,6 +4,14 @@ FILE_DOC_IDS = "./docIds.txt"
 FILE_INVERTED_INDEX = "./invertedIndex.txt"
 FILE_TERM_IDS = "./termIds.txt"
 
+def _input(msg):
+
+    # Uncomment the call to raw_input if you are using python2.
+    # Also change the hashbang from python3 to python2
+
+    # return raw_input(msg)
+    return input(msg)
+
 def parseInvertedIndex():
     # The inverted index is of the format
     # < int, <int, int> >
@@ -107,10 +115,10 @@ def main():
         for term in docIds:
             print(term, docIds[term])
 
-    query = input("Enter query: ").strip().lower()
+    query = _input("Enter query: ").strip().lower()
     while query != "":
         handleSearchQuery(query, termIds, docIds, index)
-        query = input("Enter query: ").strip().lower()
+        query = _input("Enter query: ").strip().lower()
 
 
 
