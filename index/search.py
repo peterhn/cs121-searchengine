@@ -44,12 +44,28 @@ def parseTermIds():
     lines = termFile.readlines()[1:]
     for line in lines:
         data = line.split(" ")
-        termId = int(data[0].strip())
+        termId = int(float(data[0].strip()))
         term = data[1].strip()
 
         termIds[term] = termId
 
     return termIds
+
+def parseDocIds():
+
+    # TermIds have the int ID as the key, followed by the string term as val
+    docIds = {}
+
+    docFile = open(FILE_DOC_IDS, "r")
+    lines = docFile.readlines()[1:]
+    for line in lines:
+        data = line.split(" ")
+        docId = int(float(data[0].strip()))
+        doc = data[1].strip()
+
+        docIds[docId] = doc
+
+    return docIds
 
 def main():
     ''' The main function'''
@@ -65,6 +81,11 @@ def main():
     if DEBUG or True:
         for term in termIds:
             print(term, termIds[term])
+
+    docIds = parseDocIds()
+    if DEBUG or True:
+        for term in docIds:
+            print(term, docIds[term])
 
     query = input("Enter query: ").strip().lower()
     while query != "":
