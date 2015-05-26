@@ -100,16 +100,20 @@ def main():
 
     DEBUG = False
 
+    # O(n^2)
+    #  TODO Make this faster
     index = parseInvertedIndex()
     if DEBUG or False:
         for term in index:
             print(term, index[term])
 
+    # O(n)
     termIds = parseTermIds()
     if DEBUG or False:
         for term in termIds:
             print(term, termIds[term])
 
+    # O(n)
     docIds = parseDocIds()
     if DEBUG or False:
         for term in docIds:
@@ -117,6 +121,7 @@ def main():
 
     query = _input("Enter query: ").strip().lower()
     while query != "":
+        # O(n)
         handleSearchQuery(query, termIds, docIds, index)
         query = _input("Enter query: ").strip().lower()
 
