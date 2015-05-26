@@ -67,6 +67,26 @@ def parseDocIds():
 
     return docIds
 
+def handleSearchQuery(query, termIds, docIds, index):
+    # Searches for the query in the index
+
+    # ONLY HANDLES SINGLE WORDS AT THE MOMENT
+    # First get the term number from the query
+    if query not in termIds:
+        print("Failed to find " + query + " in list of terms")
+    else:
+        termId = termIds[query]
+        pages = index[termId]
+        genexp = ((k, pages[k]) for k in sorted(pages, key=pages.get, reverse=True)[:5])
+
+        print("The term: \"" + query +"\" occurs in the following documents...")
+        for k, v in genexp:
+            # k is docId
+            # v is frequency of occurance
+            print("\t", docIds[k], "\tOccurs:", v, "times")
+
+
+
 def main():
     ''' The main function'''
 
@@ -78,17 +98,18 @@ def main():
             print(term, index[term])
 
     termIds = parseTermIds()
-    if DEBUG or True:
+    if DEBUG or False:
         for term in termIds:
             print(term, termIds[term])
 
     docIds = parseDocIds()
-    if DEBUG or True:
+    if DEBUG or False:
         for term in docIds:
             print(term, docIds[term])
 
     query = input("Enter query: ").strip().lower()
     while query != "":
+        handleSearchQuery(query, termIds, docIds, index)
         query = input("Enter query: ").strip().lower()
 
 
