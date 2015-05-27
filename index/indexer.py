@@ -4,7 +4,7 @@ import collections
 import json
 
 #path for dumped crawl data
-crawlDataPath = '/users/peternguyen/documents/school/cs121/index/FileDump/';
+crawlDataPath = '/users/peternguyen/downloads/FileDump/';
 
 #generated ids for terms and documents
 termIdCount = 0
