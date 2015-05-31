@@ -161,30 +161,37 @@ def booleanSearch(word, termIds, index):
 
     return pages
 
+def weightedTermFrequency(termId, docId):
+    docText = parseDocData(docId)
+    termCount = float(pages[docId])
+    docSize = float(len(docText.split()))
+    tf = termCount / docSize
+    if tf == 0:
+        return 0
+    else:
+        return 1+ math.log(tf)
 
-def findTFIDF(termId, document, docIds, index):
+
+
+def findTFIDF(termId, docId, docIds, index):
     # Get the dict of pages which contain the term somewhere
     pages = index[termId]
 
     # Get the TF for the given term
     # TF = # of times t appears in doc / total # of terms in doc
     # Get the document in question
-    if document in pages:
-        docText = parseDocData(document)
-        termCount = float(pages[document])
-        docSize = float(len(docText.split()))
-        tf = termCount / docSize
-
+    if docId in pages:
+        wtf = weightedTermFrequency(termId, docId)
         # Get the IDF for the given term
         # IDF = total # of documents / number of documents that contain
         # the termId
         idf = math.log(float(len(docIds)) / float(len(pages)))
 
         # Compute the tf-idf
-        return float(tf * idf)
+        return float(wtf * idf)
     else:
         # Term was not in document
-        return -1
+        return 0
 
 
 def computeAllTFIDF(docs, termIds, docIds, index, search, weight):
@@ -203,11 +210,12 @@ def computeAllTFIDF(docs, termIds, docIds, index, search, weight):
                     tfidfScores[doc] = (tfidf * weight)
                 else:
                     print("tfidf for docId:", doc, "is alread contained. Is this an error?")
-                    score = tfidfScores[doc]
-                    print("Old Score: ", score)
-                    newScore = (tfidf * weight)
-                    print("Averaging scores for new tfidf")
-                    tfidfScores[doc] = float(score + newScore) / 2.0
+                    # score = tfidfScores[doc]
+                    # print("Old Score: ", score)
+                    # newScore = (tfidf * weight)
+                    # print("Averaging scores for new tfidf")
+                    # tfidfScores[doc] = float(score + newScore) / float(len(search))
+                    tfidfScores[dodc] += (tfidf* weight)
 
     return tfidfScores
 
