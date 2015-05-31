@@ -161,17 +161,12 @@ def booleanSearch(word, termIds, index):
 
     return pages
 
-def weightedTermFrequency(termId, docId):
+def weightedTermFrequency(docId, pages):
     docText = parseDocData(docId)
     termCount = float(pages[docId])
     docSize = float(len(docText.split()))
     tf = termCount / docSize
-    if tf == 0:
-        return 0
-    else:
-        return 1+ math.log(tf)
-
-
+    return (0 if tf == 0 else (1 + math.log(tf)))
 
 def findTFIDF(termId, docId, docIds, index):
     # Get the dict of pages which contain the term somewhere
@@ -181,7 +176,7 @@ def findTFIDF(termId, docId, docIds, index):
     # TF = # of times t appears in doc / total # of terms in doc
     # Get the document in question
     if docId in pages:
-        wtf = weightedTermFrequency(termId, docId)
+        wtf = weightedTermFrequency(docId, pages)
         # Get the IDF for the given term
         # IDF = total # of documents / number of documents that contain
         # the termId
@@ -199,23 +194,21 @@ def computeAllTFIDF(docs, termIds, docIds, index, search, weight):
     for doc in docs:
         for word in search:
             termId = termIds[word]
-            tfidf = findTFIDF(termId, doc, docIds, index)
-            if tfidf != -1:
-
-                # Put tfidf into map
-                if doc not in tfidfScores:
-                    # Write the tfidf score to the doc for the term
-                    # Weigh the good doc scores more
-                    # For now, just double them or whatever
-                    tfidfScores[doc] = (tfidf * weight)
-                else:
-                    print("tfidf for docId:", doc, "is alread contained. Is this an error?")
-                    # score = tfidfScores[doc]
-                    # print("Old Score: ", score)
-                    # newScore = (tfidf * weight)
-                    # print("Averaging scores for new tfidf")
-                    # tfidfScores[doc] = float(score + newScore) / float(len(search))
-                    tfidfScores[dodc] += (tfidf* weight)
+            tfidf = findTFIDF(termId, doc, docIds, index) * weight
+            # Put tfidf into map
+            if doc not in tfidfScores:
+                # Write the tfidf score to the doc for the term
+                # Weigh the good doc scores more
+                # For now, just double them or whatever
+                tfidfScores[doc] = tfidf
+            else:
+                print("tfidf for docId:", doc, "is alread contained. Is this an error?")
+                # score = tfidfScores[doc]
+                # print("Old Score: ", score)
+                # newScore = (tfidf * weight)
+                # print("Averaging scores for new tfidf")
+                # tfidfScores[doc] = float(score + newScore) / float(len(search))
+                tfidfScores[dodc] += tfidf
 
     return tfidfScores
 
@@ -316,11 +309,11 @@ def main():
     #     for docId in docTexts:
     #         print(docId, docTexts[docId])
 
-    query = _input("Enter query: ").strip().lower()
+    query = _input("Enter query: ").strip()
     while query != "":
         tfidfScores = handleSearchQuery(query, termIds, docIds, index)
         printTFIDF(tfidfScores)
-        query = _input("Enter query: ").strip().lower()
+        query = _input("Enter query: ").strip()
 
 if __name__ == "__main__":
     main()
