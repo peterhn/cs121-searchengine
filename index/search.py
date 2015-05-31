@@ -161,12 +161,12 @@ def booleanSearch(word, termIds, index):
 
     return pages
 
-def weightedTermFrequency(docId, pages):
+def termFrequency(docId, pages):
     docText = parseDocData(docId)
     termCount = float(pages[docId])
     docSize = float(len(docText.split()))
     tf = termCount / docSize
-    return (0 if tf == 0 else (1 + math.log(tf)))
+    return tf
 
 def findTFIDF(termId, docId, docIds, index):
     # Get the dict of pages which contain the term somewhere
@@ -176,14 +176,14 @@ def findTFIDF(termId, docId, docIds, index):
     # TF = # of times t appears in doc / total # of terms in doc
     # Get the document in question
     if docId in pages:
-        wtf = weightedTermFrequency(docId, pages)
+        tf = termFrequency(docId, pages)
         # Get the IDF for the given term
         # IDF = total # of documents / number of documents that contain
         # the termId
         idf = math.log(float(len(docIds)) / float(len(pages)))
 
         # Compute the tf-idf
-        return float(wtf * idf)
+        return float(tf * idf)
     else:
         # Term was not in document
         return 0
