@@ -70,7 +70,7 @@ def parseDocData(docId):
     try:
         with open(fn) as data:
             jsonData = json.load(data)
-            text = str(jsonData["text"]).lower()
+            text = str(jsonData["text"])
     except ValueError:
         print("No valid JSON in file: ", fn)
     return text

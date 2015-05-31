@@ -41,7 +41,7 @@ def parseFiles():
                 #write termIds
                 pageTerms = data["text"].split()
                 for term in pageTerms:
-                    termEncoded = term.encode('utf8').lower()
+                    termEncoded = term.encode('utf8')
                     if(not isNumber(termEncoded)):
                         #add to list
                         value = termIds.get(termEncoded)
