@@ -198,17 +198,18 @@ def computeAllTFIDF(docs, termIds, docIds, index, search, weight):
             if tfidf != -1:
 
                 # Put tfidf into map
-                if termId not in tfidfScores:
-                    tfidfScores[termId] = {}
-
-                if doc in tfidfScores[termId]:
+                if doc not in tfidfScores:
+                    # Write the tfidf score to the doc for the term
+                    # Weigh the good doc scores more
+                    # For now, just double them or whatever
+                    tfidfScores[doc] = (tfidf * weight)
+                else:
                     print("tfidf for docId:", doc, "is alread contained. Is this an error?")
-                    print("Overwriting tfidf score for docId: ", doc)
-
-                # Write the tfidf score to the doc for the term
-                # Weigh the good doc scores more
-                # For now, just double them or whatever
-                tfidfScores[termId][doc] = (tfidf * weight)
+                    score = tfidfScores[doc]
+                    print("Old Score: ", score)
+                    newScore = (tfidf * weight)
+                    print("Averaging scores for new tfidf")
+                    tfidfScores[doc] = float(score + newScore) / 2.0
 
     return tfidfScores
 
@@ -221,12 +222,13 @@ def computeScore(docs, termIds, docIds, index, search, weight):
     # score.update(COSINE_EVALUATION_FUNCTION)
     return score
 
+# O(n^2)
 def handleSearchQuery(query, termIds, docIds, index):
     # Searches for the query in the index
 
     # tdidf is a dictionary which has
     # a mapping structure as follows
-    # <termId, <docId, tfidf> >
+    # <docId, tfidf>
     tfidfScores = {}
 
     # A list of documents which contain any of the words
@@ -237,19 +239,20 @@ def handleSearchQuery(query, termIds, docIds, index):
     # in the query
     goodDocs = []
 
-    search = query.split()
+    rawSearch = query.split()
+    search = []
+    for word in rawSearch:
+        if word in termIds:
+            search.append(word)
 
     # First run a boolean search over the words in the query
     for word in search:
-        if word not in termIds:
-            print("Failed to find " + word + " in list of terms")
-        else:
-            checkDocs = booleanSearch(word, termIds, index)
-            for doc in checkDocs:
-                if doc not in validDocs:
-                    # Stops duplicate docIds from being added to the valid docs
-                    # list
-                    validDocs.append(doc)
+        checkDocs = booleanSearch(word, termIds, index)
+        for doc in checkDocs:
+            if doc not in validDocs:
+                # Stops duplicate docIds from being added to the valid docs
+                # list
+                validDocs.append(doc)
 
     validDocs.sort()
 
@@ -257,14 +260,12 @@ def handleSearchQuery(query, termIds, docIds, index):
     for doc in validDocs:
         containsAll = True
         for word in search:
-            if word not in termIds:
-                print("Failed to find " + word + " in list of terms")
-            else:
-                termId = termIds[word]
-                validPages = index[termId]
-                if doc not in validPages:
-                    containsAll = False
-                    break
+            termId = termIds[word]
+            validPages = index[termId]
+            if doc not in validPages:
+                containsAll = False
+                break
+
         if containsAll:
             # Add it to the good docs
             goodDocs.append(doc)
@@ -275,23 +276,19 @@ def handleSearchQuery(query, termIds, docIds, index):
     for doc in goodDocs:
         validDocs.remove(doc)
 
-    print("Valid Docs: ", validDocs)
-    print("Good Docs: ", goodDocs)
+    # print("Valid Docs: ", validDocs)
+    # print("Good Docs: ", goodDocs)
 
     # Now compute tfidf of the document
     tfidfScores.update(computeScore(goodDocs, termIds, docIds, index, search, 2.0))
     tfidfScores.update(computeScore(validDocs, termIds, docIds, index, search, 1.0))
     return tfidfScores
 
-
-
 # O(n^2)
 def printTFIDF(tfidfScores):
-    for term in tfidfScores:
-        scores = tfidfScores[term]
-        genexp = ((k, scores[k]) for k in sorted(scores, key=scores.get, reverse=True))
+        genexp = ((k, tfidfScores[k]) for k in sorted(tfidfScores, key=tfidfScores.get, reverse=True)[:5])
         for k, v in genexp:
-            print("termId = ", term, "\n\tdocId = ", k, "\n\ttf-idf = ", v)
+            print("\n\tdocId = ", k, "\n\ttf-idf = ", v)
 
 def main():
     ''' The main function'''
@@ -329,7 +326,6 @@ def main():
 
     query = _input("Enter query: ").strip().lower()
     while query != "":
-        # O(n)
         tfidfScores = handleSearchQuery(query, termIds, docIds, index)
         printTFIDF(tfidfScores)
         query = _input("Enter query: ").strip().lower()
