@@ -25,27 +25,25 @@ def parseInvertedIndex():
     # page names as keys tied to the frequency of occurence as values
     invertedIndex = {}
 
-
     # Open the invertedIndex file
-    indexFile = open(FILE_INVERTED_INDEX, "r")
-    # Read each line and parse it into the invertedIndex
-    for line in indexFile:
-        # line is the docId followed by a space and then a list of termIds
-        data = line.split(" ")
-        docId = int(float(data[0].strip()))
-        terms = data[2:]
+    with open(FILE_INVERTED_INDEX, "r") as indexFile:
+        # Read each line and parse it into the invertedIndex
+        lines = set(indexFile.readlines())
+        for line in lines:
+            # line is the docId followed by a space and then a list of termIds
+            data = line.split(" ")
+            docId = int(float(data[0].strip()))
+            terms = set(data[2:])
 
-        # Create the key to dict mapping
-        invertedIndex[docId] = {}
+            # Create the key to dict mapping
+            invertedIndex[docId] = {}
 
-        for term in terms:
-            t = int(float(term.strip()))
-            if t in invertedIndex[docId]:
-                invertedIndex[docId][t] += 1
-            else:
-                invertedIndex[docId][t] = 1
-
-    indexFile.close()
+            for term in terms:
+                t = int(float(term.strip()))
+                if t in invertedIndex[docId]:
+                    invertedIndex[docId][t] += 1
+                else:
+                    invertedIndex[docId][t] = 1
     return invertedIndex;
 
 def parseTermIds():
@@ -53,14 +51,14 @@ def parseTermIds():
     # TermIds have the string term as the key, followed by the ID as an int
     termIds = {}
 
-    termFile = open(FILE_TERM_IDS, "r")
-    lines = termFile.readlines()[1:]
-    for line in lines:
-        data = line.split(" ")
-        termId = int(float(data[0].strip()))
-        term = data[1].strip()
+    with open(FILE_TERM_IDS, "r") as termFile:
+        lines = set(termFile.readlines()[1:])
+        for line in lines:
+            data = line.split(" ")
+            termId = int(float(data[0].strip()))
+            term = data[1].strip()
 
-        termIds[term] = termId
+            termIds[term] = termId
 
     return termIds
 
@@ -92,14 +90,14 @@ def parseDocIds():
     # TermIds have the int ID as the key, followed by the string term as val
     docIds = {}
 
-    docFile = open(FILE_DOC_IDS, "r")
-    lines = docFile.readlines()[1:]
-    for line in lines:
-        data = line.split(" ")
-        docId = int(float(data[0].strip()))
-        doc = data[1].strip()
+    with open(FILE_DOC_IDS, "r") as docFile:
+        lines = set(docFile.readlines()[1:])
+        for line in lines:
+            data = line.split(" ")
+            docId = int(float(data[0].strip()))
+            doc = data[1].strip()
 
-        docIds[docId] = doc
+            docIds[docId] = doc
 
     return docIds
 
@@ -239,7 +237,7 @@ def handleSearchQuery(query, termIds, docIds, index):
     # in the query
     goodDocs = set()
 
-    rawSearch = query.split()
+    rawSearch = set(query.split())
     search = set()
     for word in rawSearch:
         if word in termIds:
@@ -292,26 +290,16 @@ def main():
     DEBUG = False
 
     # O(n^2)
-    #  TODO Make this faster
     print('Building index...')
     index = parseInvertedIndex()
-    if DEBUG or False:
-        for term in index:
-            print(term, index[term])
 
     # O(n)
     print('Building termIds...')
     termIds = parseTermIds()
-    if DEBUG or False:
-        for term in termIds:
-            print(term, termIds[term])
 
     # O(n)
     print('Building docIds...')
     docIds = parseDocIds()
-    if DEBUG or False:
-        for term in docIds:
-            print(term, docIds[term])
 
     # O(n)
     # print('Building docTexts...')
