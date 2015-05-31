@@ -233,17 +233,17 @@ def handleSearchQuery(query, termIds, docIds, index):
 
     # A list of documents which contain any of the words
     # in the query
-    validDocs = []
+    validDocs = set()
 
     # A list of documents which contain all of the words
     # in the query
-    goodDocs = []
+    goodDocs = set()
 
     rawSearch = query.split()
-    search = []
+    search = set()
     for word in rawSearch:
         if word in termIds:
-            search.append(word)
+            search.add(word)
 
     # First run a boolean search over the words in the query
     for word in search:
@@ -252,9 +252,7 @@ def handleSearchQuery(query, termIds, docIds, index):
             if doc not in validDocs:
                 # Stops duplicate docIds from being added to the valid docs
                 # list
-                validDocs.append(doc)
-
-    validDocs.sort()
+                validDocs.add(doc)
 
     # Find all docs which have all words in the query, they are worth more.
     for doc in validDocs:
@@ -268,9 +266,7 @@ def handleSearchQuery(query, termIds, docIds, index):
 
         if containsAll:
             # Add it to the good docs
-            goodDocs.append(doc)
-
-    goodDocs.sort()
+            goodDocs.add(doc)
 
     # Remove all the good docs from the valid docs
     for doc in goodDocs:
