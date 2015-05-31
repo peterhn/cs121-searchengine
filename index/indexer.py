@@ -1,10 +1,11 @@
+#!/usr/bin/env python2
 import os
 import sys
 import collections
 import json
 
 #path for dumped crawl data
-crawlDataPath = '/users/peternguyen/downloads/FileDump/';
+crawlDataPath = './FileDump/';
 
 #generated ids for terms and documents
 termIdCount = 0
