@@ -162,11 +162,7 @@ def booleanSearch(word, termIds, index):
     return pages
 
 def termFrequency(docId, pages):
-    docText = parseDocData(docId)
-    termCount = float(pages[docId])
-    docSize = float(len(docText.split()))
-    tf = termCount / docSize
-    return tf
+    return pages[docId] / len(parseDocData(docId).split())
 
 def findTFIDF(termId, docId, docIds, index):
     # Get the dict of pages which contain the term somewhere
@@ -208,7 +204,7 @@ def computeAllTFIDF(docs, termIds, docIds, index, search, weight):
                 # newScore = (tfidf * weight)
                 # print("Averaging scores for new tfidf")
                 # tfidfScores[doc] = float(score + newScore) / float(len(search))
-                tfidfScores[dodc] += tfidf
+                tfidfScores[doc] += tfidf
 
     return tfidfScores
 
