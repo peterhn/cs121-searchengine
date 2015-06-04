@@ -7,7 +7,7 @@ FILE_DOC_IDS = "./docIds.txt"
 FILE_INVERTED_INDEX = "./invertedIndex.txt"
 FILE_TERM_IDS = "./termIds.txt"
 FILE_DUMP = "./FileDump/"
-
+FILE_DOCUMENT_MAGNITUDES = "./documentMagnitudes.txt"
 
 def _input(msg):
 
@@ -84,6 +84,36 @@ def parseDocData(docId):
     #     except ValueError:
     #         print('No valid JSON')
     # return docTexts
+
+def parseDocumentMagnitudes():
+    fn = FILE_DOCUMENT_MAGNITUDES
+    documentMagnitudes = {}
+    with open(fn, 'r') as file:
+        lines = set(file.readlines()[1:])
+        for line in lines:
+            data = line.split(" ")
+            docId = int(float(data[0].strip()))
+            magnitude = float(data[1].strip())
+
+            documentMagnitudes[docId] = magnitude
+    return documentMagnitudes
+    # documentMagnitudes = {}
+    # docParsed = 0
+    # for doc in docIds:
+    #    documentTFIDFExponentialSum = 0
+    #    docText = set(parseDocData(doc).lower().split())
+    #    for word in docText:
+    #        if word in termIds:
+    #            termId = termIds[word]
+    #            tfidf = findTFIDF(termId, word, doc, docIds, index)
+    #            documentTFIDFExponentialSum += tfidf ** 2
+    #    if doc not in documentMagnitudes:
+    #        documentMagnitudes[doc] = math.sqrt(documentTFIDFExponentialSum)
+    #    docParsed += 1
+    #    with open('documentMagnitudes.txt', 'a') as f:
+    #        f.write(str(doc) + ' ' + str(documentMagnitudes[doc]) + '\n')
+    #    print(docParsed, '/', len(docIds))
+    #return documentMagnitudes
 
 def parseDocIds():
 
@@ -174,7 +204,6 @@ def findTFIDF(termId, term, docId, docIds, index):
     # Get the dict of pages which contain the term somewhere
     pages = index[termId]
 
-
     # Get the TF for the given term
     # TF = # of times t appears in doc / total # of terms in doc
     # Get the document in question
@@ -193,12 +222,31 @@ def findTFIDF(termId, term, docId, docIds, index):
         return 0
 
 
-def computeAllTFIDF(docs, termIds, docIds, index, search, weight):
+def computeAllTFIDF(docs, termIds, docIds, index, search, documentMagnitudes, weight):
     tfidfScores = {}
+
+    queryTFIDF = {}
+    #search is set
+    for word in search:
+        if word in termIds:
+            termId = termIds[word]
+            tfidf = computeSingleWordTFIDF(termId, docIds, index)
+            queryTFIDF[termId] = tfidf
+
+    queryTFIDFExponentialSum = 0
+    for termId in queryTFIDF:
+        queryTFIDFExponentialSum += (queryTFIDF[termId] ** 2)
+
+    queryMagnitude = math.sqrt(queryTFIDFExponentialSum)
+
+    cosineSimilarities = {}
+    documentParsed = 0
     for doc in docs:
+        dotProduct = 0
         for word in search:
             termId = termIds[word]
-            tfidf = findTFIDF(termId, word, doc, docIds, index) * weight
+            tfidf = findTFIDF(termId, word, doc, docIds, index)
+            dotProduct += queryTFIDF[termId] * tfidf
             # Put tfidf into map
             if doc not in tfidfScores:
                 # Write the tfidf score to the doc for the term
@@ -213,20 +261,39 @@ def computeAllTFIDF(docs, termIds, docIds, index, search, weight):
                 # print("Averaging scores for new tfidf")
                 # tfidfScores[doc] = float(score + newScore) / float(len(search))
                 tfidfScores[doc] += tfidf
+        print('docId : ' + str(doc) + ' ' + str(dotProduct))
+        documentMagnitude = documentMagnitudes[doc]
+        cosineSimilarity = dotProduct / (queryMagnitude * documentMagnitude)
+        documentParsed += 1
+        if doc not in cosineSimilarities:
+            cosineSimilarities[doc] = cosineSimilarity * weight
 
-    return tfidfScores
+    return cosineSimilarities
 
-def computeScore(docs, termIds, docIds, index, search, weight):
+#computes TFIDF for a single word in a query
+def computeSingleWordTFIDF(termId, docIds, index):
+    # Get the dict of pages which contain the term somewhere
+    pages = index[termId]
+
+    tf = 1 + math.log(1)
+
+    idf = math.log(float(len(docIds)) / float(len(pages)))
+
+    return float(tf * idf)
+
+
+
+def computeScore(docs, termIds, docIds, index, search, documentMagnitudes, weight):
     score = {}
 
     # TODO(peter or francis) Cosine Vector evaluation.
     # Do any kind of evaluation here
-    score.update(computeAllTFIDF(docs, termIds, docIds, index, search, weight))
+    score.update(computeAllTFIDF(docs, termIds, docIds, index, search, documentMagnitudes, weight))
     # score.update(COSINE_EVALUATION_FUNCTION)
     return score
 
 # O(n^2)
-def handleSearchQuery(query, termIds, docIds, index):
+def handleSearchQuery(query, termIds, docIds, index, documentMagnitudes):
     # Searches for the query in the index
 
     # tdidf is a dictionary which has
@@ -279,8 +346,8 @@ def handleSearchQuery(query, termIds, docIds, index):
     # print("Good Docs: ", goodDocs)
 
     # Now compute tfidf of the document
-    tfidfScores.update(computeScore(goodDocs, termIds, docIds, index, search, 2.0))
-    tfidfScores.update(computeScore(validDocs, termIds, docIds, index, search, 1.0))
+    tfidfScores.update(computeScore(goodDocs, termIds, docIds, index, search, documentMagnitudes, 2.0))
+    tfidfScores.update(computeScore(validDocs, termIds, docIds, index, search, documentMagnitudes, 1.0))
     return tfidfScores
 
 # O(n^2)
@@ -306,6 +373,9 @@ def main():
     print('Building docIds...')
     docIds = parseDocIds()
 
+    print('Building Document Magnitudes...')
+    documentMagnitudes = parseDocumentMagnitudes()
+
     # O(n) { termId  : [{ docId : count }]}
     # print('Building termFrequencies...')
     # termFrequencies = parseTermFrequencies()
@@ -315,7 +385,7 @@ def main():
 
     query = _input("Enter query: ").strip()
     while query != "":
-        tfidfScores = handleSearchQuery(query, termIds, docIds, index)
+        tfidfScores = handleSearchQuery(query, termIds, docIds, index, documentMagnitudes)
         printTFIDF(tfidfScores, docIds)
         query = _input("Enter query: ").strip()
 
