@@ -62,6 +62,19 @@ def parseTermIds():
 
     return termIds
 
+def parseDocTitle(docId):
+    # The doc texts are ordered in the same way as the ids,
+    # instead of opening all of them, just parse them on demand
+    fn = FILE_DUMP + str(int(float(docId))) + ".txt"
+    text = ""
+    try:
+        with open(fn) as data:
+            jsonData = json.load(data)
+            title = str(jsonData["title"])
+    except ValueError:
+        print("No valid JSON in file: ", fn)
+    return title
+
 def parseDocData(docId):
     # The doc texts are ordered in the same way as the ids,
     # instead of opening all of them, just parse them on demand
@@ -261,7 +274,7 @@ def computeAllTFIDF(docs, termIds, docIds, index, search, documentMagnitudes, we
                 # print("Averaging scores for new tfidf")
                 # tfidfScores[doc] = float(score + newScore) / float(len(search))
                 tfidfScores[doc] += tfidf
-        print('docId : ' + str(doc) + ' ' + str(dotProduct))
+        # print('docId : ' + str(doc) + ' ' + str(dotProduct))
         documentMagnitude = documentMagnitudes[doc]
         cosineSimilarity = dotProduct / (queryMagnitude * documentMagnitude)
         documentParsed += 1
@@ -354,7 +367,9 @@ def handleSearchQuery(query, termIds, docIds, index, documentMagnitudes):
 def printTFIDF(tfidfScores, docIds):
         genexp = ((k, tfidfScores[k]) for k in sorted(tfidfScores, key=tfidfScores.get, reverse=True)[:5])
         for k, v in genexp:
-            print("\n\tdocURL = ", docIds[k],"\n\tdocId = ", k, "\n\ttf-idf = ", v)
+            title = parseDocTitle(k).strip()
+            print("\nID: ", k, " ", docIds[k], "\n\tTitle: ", title,
+                    "\n\tScore: ", v)
 
 def main():
     ''' The main function'''
