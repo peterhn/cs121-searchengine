@@ -1,0 +1,219 @@
+1. mondego
+
+ID:  9962   http://mondego.ics.uci.edu/datasets/wikipedia-events/
+	Title:  index of /datasets/wikipedia-events
+	Score:  0.9101945191719178
+
+ID:  16761   http://mondego.ics.uci.edu/datasets/wikipedia-events/files/
+	Title:  index of /datasets/wikipedia-events/files
+	Score:  0.5330666356630797
+
+ID:  16735   http://mondego.ics.uci.edu/datasets/
+	Title:  index of /datasets
+	Score:  0.4299579974191148
+
+ID:  7853   http://www.ics.uci.edu/~lopes/
+	Title:  crista lopes home page at uci
+	Score:  0.36670916989539926
+
+ID:  33093   http://sdcl.ics.uci.edu/2012/05/calico-for-the-mondego-group/
+	Title:  calico for the mondego group &#8211; software design and collaboration laboratory
+	Score:  0.31196018810257986
+
+2. machine learning
+
+ID:  4594   http://sli.ics.uci.edu/
+	Title:  sli | main / homepage
+	Score:  0.6432395382332567
+
+ID:  15302   http://fano.ics.uci.edu/cites/Organization/Eur-Community-Esprit-Working-Group-in-Neural-Computational-Learning-Theory.html
+	Title:  eur. community esprit working group in neural computational learning theory
+	Score:  0.5560454031794408
+
+ID:  3740   http://www.ics.uci.edu/~theory/269/970418.html
+	Title:  theory seminar, 18 apr 1997
+	Score:  0.5107705724264423
+
+ID:  4392   http://sli.ics.uci.edu/Classes/Classes
+	Title:  sli | classes / classes
+	Score:  0.5082251429190827
+
+ID:  36120   http://www.ics.uci.edu/~pazzani/Slides/BSEJ/tsld013.htm
+	Title:  pebls
+	Score:  0.5003017526440164
+
+3. software engineering
+
+ID:  367   http://www.ics.uci.edu/~ziv/ooad/intro_to_se/tsld023.htm
+	Title:  software engineering principles
+	Score:  0.9265300004221204
+
+ID:  17005   http://www.ics.uci.edu/~wscacchi/Presentations/GameLab/GameLab_files/v3_slide0018.htm
+	Title:  uci game lab
+	Score:  0.5794232189196927
+
+ID:  17053   http://www.ics.uci.edu/~wscacchi/Presentations/GameLab/GameLab_files/slide0018.htm
+	Title:  uci game lab
+	Score:  0.5794232189196927
+
+ID:  9364   http://www.ics.uci.edu/~ziv/ooad/intro_to_se/tsld007.htm
+	Title:  what is software engineering?
+	Score:  0.5403060406933431
+
+ID:  32004   http://vcp.ics.uci.edu/biblio/author/138
+	Title:  virtual collaboration portal
+	Score:  0.5365066237449492
+
+4. security
+
+ID:  32556   http://www.ics.uci.edu/~projects/DataGuard/javadoc/org/itr_rescue/dataGuard/encryption/package-frame.html
+	Title:  org.itr_rescue.dataguard.encryption
+	Score:  0.6843768552618406
+
+ID:  34207   http://drzaius.ics.uci.edu/~swirl/impromptu-0.20/xref-test/swirl/workspace/security/package-frame.html
+	Title:  swirl webdav workspace 0.20 reference package swirl.workspace.security
+	Score:  0.6443608772374783
+
+ID:  11418   http://fano.ics.uci.edu/cites/Author/Renato-M-Capocelli.html
+	Title:  renato m. capocelli
+	Score:  0.6261369563862234
+
+ID:  34149   http://djp3-pc2.ics.uci.edu/LUCICodeRepository/nomaticIM/wiki/Security
+	Title:  security – nomatic*im
+	Score:  0.6160874975716285
+
+ID:  17018   http://www.ics.uci.edu/~goodrich/teach/ics8/hw/hw1.html
+	Title:  ics 8 - introduction to computer security homework 1
+	Score:  0.6101750204450173
+
+5. student affairs
+
+ID:  7442   http://honors.ics.uci.edu/contact-us
+	Title:  contact us |
+	Score:  0.6341426647833689
+
+ID:  7822   http://www.ics.uci.edu/prospective/en/contact/student-affairs/
+	Title:  student affairs &laquo; contact &laquo; bren school of information and computer sciences &laquo; university of california irvine
+	Score:  0.44475630842324604
+
+ID:  7374   http://www.ics.uci.edu/grad/index.php
+	Title:  graduate education @ uc irvine, bren:ics
+	Score:  0.4421764468831817
+
+ID:  7400   http://www.ics.uci.edu/grad/
+	Title:  graduate education @ uc irvine, bren:ics
+	Score:  0.4421764468831817
+
+ID:  26609   http://www.ics.uci.edu/%7epeer/Site/Welcome.html
+	Title:  ics peer advisors 2010-2011
+	Score:  0.43475105862755403
+
+6. graduate courses
+
+ID:  4380   http://www.ics.uci.edu/~sjordan/index.html
+	Title:  scott jordan
+	Score:  0.4076747766718626
+
+ID:  7861   http://www.ics.uci.edu/~sjordan/
+	Title:  scott jordan
+	Score:  0.4076747766718626
+
+ID:  7885   http://ngs.ics.uci.edu/teaching/
+	Title:  teaching | ramesh jain
+	Score:  0.39769113973808706
+
+ID:  7592   http://www.ics.uci.edu/grad/policies/GradPolicies_PreviousMSdegree.php
+	Title:  graduate student policies @ the bren school of information and computer sciences
+	Score:  0.3893338919078987
+
+ID:  1387   http://www.ics.uci.edu/%7ewelling/teaching/courses.html
+	Title:  untitled document
+	Score:  0.35861163328207085
+
+7. informatics
+
+ID:  10435   http://fano.ics.uci.edu/cites/Author/T-Takagi.html
+	Title:  t. takagi
+	Score:  0.5977345135000518
+
+ID:  10431   http://fano.ics.uci.edu/cites/Organization/Universal-Academy-Press.html
+	Title:  universal academy press
+	Score:  0.5773673214057031
+
+ID:  4475   http://www.ics.uci.edu/~andre/teaching.html
+	Title:  andr&eacute; van der hoek's teaching
+	Score:  0.5699354071987682
+
+ID:  15219   http://fano.ics.uci.edu/cites/Organization/Carleton-Univ-Press.html
+	Title:  carleton univ. press
+	Score:  0.5631138046368007
+
+ID:  17396   http://fano.ics.uci.edu/cites/Location/International-Informatics.html
+	Title:  international informatics
+	Score:  0.5363123651663225
+
+8. REST
+
+ID:  18921   http://www.ics.uci.edu/~eppstein/pix/ontheroad/BwilOrchard.html
+	Title:  orchard
+	Score:  0.5004591214498961
+
+ID:  33195   http://vcp.ics.uci.edu/content/harmonizing-architectural-dissonance-rest-based-architectures-0
+	Title:  harmonizing architectural dissonance in rest-based architectures | virtual collaboration portal
+	Score:  0.3576237456098762
+
+ID:  46265   http://djp3-pc2.ics.uci.edu/LUCICodeRepository/nomaticIM/changeset/1026
+	Title:  changeset 1026 – nomatic*im
+	Score:  0.33430254592325354
+
+ID:  49796   http://djp3-pc2.ics.uci.edu/LUCICodeRepository/nomaticIM/changeset/1026/nomatic/trunk/service
+	Title:  changeset 1026 for nomatic/trunk/service – nomatic*im
+	Score:  0.3333705243646816
+
+ID:  48561   http://djp3-pc2.ics.uci.edu/LUCICodeRepository/nomaticIM/changeset/1026/nomatic/trunk/service/edu/uci
+	Title:  changeset 1026 for nomatic/trunk/service/edu/uci – nomatic*im
+	Score:  0.3329854945498588
+
+9. computer games
+
+ID:  3942   http://fano.ics.uci.edu/cites/Location/MSRI-Publications.html
+	Title:  msri publications
+	Score:  0.5260358561018428
+
+ID:  6529   http://fano.ics.uci.edu/cites/Document/Computational-complexity-of-games-and-puzzles.html
+	Title:  computational complexity of games and puzzles
+	Score:  0.48594769050346726
+
+ID:  12686   http://fano.ics.uci.edu/cites/Author/Paul-Hunter.html
+	Title:  paul hunter
+	Score:  0.471766201202851
+
+ID:  7651   http://frost.ics.uci.edu/
+	Title:  dan frost's home page
+	Score:  0.47018103072067224
+
+ID:  5637   http://fano.ics.uci.edu/cites/Document/Playing-games-with-algorithms-algorithmic-combinatorial-game-theory.html
+	Title:  playing games with algorithms: algorithmic combinatorial game theory
+	Score:  0.46911961148433745
+
+10. information retrieval
+
+ID:  4050   http://fano.ics.uci.edu/cites/Location/Proc-29th-Symp-Theory-of-Computing.html
+	Title:  proc. 29th symp. theory of computing
+	Score:  0.5649615158424467
+
+ID:  42490   http://ngs.ics.uci.edu/multimedia-information-retrieval-at-nus-2/
+	Title:  multimedia information retrieval at nus &#8211; 2 | ramesh jain
+	Score:  0.539439140487393
+
+ID:  33932   http://www.ics.uci.edu/~djp3/classes/2008_09_26_CS221/index.html
+	Title:  fall 2008: computer science 221 : information retrieval : home
+	Score:  0.45765003334055576
+
+ID:  35217   http://www.ics.uci.edu/~ejw/authoring/www6/tsld030.htm
+	Title:  version graph retrieval requirements
+	Score:  0.4446851657973358
+
+ID:  42492   http://ngs.ics.uci.edu/multimedia-information-retrieval-at-nus-1/
+	Title:  multimedia information retrieval at nus &#8211; 1 | ramesh jain
+	Score:  0.44094919201832994

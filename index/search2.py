@@ -398,7 +398,7 @@ def main():
     #     for docId in docTexts:
     #         print(docId, docTexts[docId])
 
-    query = _input("Enter query: ").strip()
+    query = _input("Enter query: ").strip().lower()
     while query != "":
         tfidfScores = handleSearchQuery(query, termIds, docIds, index, documentMagnitudes)
         printTFIDF(tfidfScores, docIds)
